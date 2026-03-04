@@ -63,7 +63,7 @@ export default function TiersDetail() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
-          <section className="bg-white border border-slate-200 rounded-xl p-8">
+          <section className="bg-white border border-slate-200 rounded-xl p-4 sm:p-8">
             <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Coordonnees</h3>
             <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
               {tier.email && <div><dt className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1"><Mail size={12} /> Email</dt><dd className="text-sm font-medium text-slate-900">{tier.email}</dd></div>}
@@ -74,7 +74,7 @@ export default function TiersDetail() {
           </section>
 
           {ownedLots.length > 0 && (
-            <section className="bg-white border border-slate-200 rounded-xl p-8">
+            <section className="bg-white border border-slate-200 rounded-xl p-4 sm:p-8">
               <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Lots possedes ({ownedLots.length})</h3>
               <div className="space-y-3">
                 {ownedLots.map(lot => {
@@ -97,7 +97,7 @@ export default function TiersDetail() {
           )}
 
           {managedLots.length > 0 && (
-            <section className="bg-white border border-slate-200 rounded-xl p-8">
+            <section className="bg-white border border-slate-200 rounded-xl p-4 sm:p-8">
               <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Lots en gestion ({managedLots.length})</h3>
               <div className="space-y-3">
                 {managedLots.map(lot => {

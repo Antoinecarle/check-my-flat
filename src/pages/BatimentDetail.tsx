@@ -138,8 +138,8 @@ export default function BatimentDetail() {
         </div>
       </header>
 
-      <div className="border-b border-slate-200 mb-8">
-        <div className="flex gap-8">
+      <div className="border-b border-slate-200 mb-8 overflow-x-auto">
+        <div className="flex gap-4 sm:gap-8 min-w-max">
           {(['lots', 'missions', 'informations'] as const).map((tab) => (
             <button key={tab} onClick={() => setActiveTab(tab)} className={`pb-4 text-sm font-semibold transition-all relative ${activeTab === tab ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}>
               {tab === 'lots' ? 'Lots' : tab === 'missions' ? 'Missions' : 'Informations'}
@@ -153,7 +153,8 @@ export default function BatimentDetail() {
 
       {activeTab === 'lots' ? (
         <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
-          <table className="w-full text-left border-collapse">
+          <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[600px]">
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-200">
                 <th className="px-6 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest">Lot / Type</th>
@@ -211,6 +212,7 @@ export default function BatimentDetail() {
               )}
             </tbody>
           </table>
+          </div>
         </div>
       ) : activeTab === 'missions' ? (
         <DataTable
@@ -223,7 +225,7 @@ export default function BatimentDetail() {
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
-            <section className="bg-white border border-slate-200 rounded-xl p-8">
+            <section className="bg-white border border-slate-200 rounded-xl p-4 sm:p-8">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2 bg-blue-50 rounded-lg"><Info className="w-5 h-5 text-blue-600" /></div>
                 <h3 className="text-lg font-semibold text-slate-900">Details structurels</h3>
@@ -248,7 +250,7 @@ export default function BatimentDetail() {
               </dl>
             </section>
 
-            <section className="bg-white border border-slate-200 rounded-xl p-8">
+            <section className="bg-white border border-slate-200 rounded-xl p-4 sm:p-8">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2 bg-slate-50 rounded-lg"><MapPin className="w-5 h-5 text-slate-600" /></div>
                 <h3 className="text-lg font-semibold text-slate-900">Adresses</h3>

@@ -132,13 +132,13 @@ export default function Batiments() {
             <h1 className="text-3xl font-light tracking-tight text-slate-900">Batiments</h1>
             <p className="text-slate-500 text-sm mt-1">Gerez votre parc immobilier</p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
             <div className="relative group">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors" size={18} />
               <input
                 type="text"
                 placeholder="Rechercher..."
-                className="pl-10 pr-4 py-2.5 w-64 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600 transition-all placeholder:text-slate-400"
+                className="pl-10 pr-4 py-2.5 w-full sm:w-64 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600 transition-all placeholder:text-slate-400"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -154,9 +154,9 @@ export default function Batiments() {
       </header>
 
       {/* Filters */}
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 p-1 bg-slate-100/50 rounded-xl border border-slate-200/60">
+      <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center justify-between gap-4 mb-6">
+        <div className="flex items-center gap-4 w-full sm:w-auto overflow-x-auto">
+          <div className="flex items-center gap-2 p-1 bg-slate-100/50 rounded-xl border border-slate-200/60 flex-shrink-0">
             {(['Tous', 'immeuble', 'maison', 'local_commercial', 'mixte'] as const).map((type) => (
               <button
                 key={type}

@@ -105,8 +105,8 @@ export default function AdvancedFilter({ columns, rules, onChange }: AdvancedFil
             className="fixed inset-x-3 top-auto bottom-3 sm:absolute sm:inset-auto sm:top-full sm:left-0 sm:bottom-auto sm:mt-2 sm:w-[480px] bg-white border border-slate-200 rounded-xl shadow-xl z-50 p-4"
           >
             <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Ajouter un filtre</div>
-            <div className="flex items-end gap-2 mb-4">
-              <div className="flex-1">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-end gap-2 mb-4">
+              <div className="flex-1 min-w-0">
                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 block">Colonne</label>
                 <select
                   value={newColumn}
@@ -116,7 +116,7 @@ export default function AdvancedFilter({ columns, rules, onChange }: AdvancedFil
                   {columns.map(c => <option key={c.key} value={c.key}>{c.label}</option>)}
                 </select>
               </div>
-              <div className="w-36">
+              <div className="sm:w-36">
                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 block">Operateur</label>
                 <select
                   value={newOperator}
@@ -126,23 +126,25 @@ export default function AdvancedFilter({ columns, rules, onChange }: AdvancedFil
                   {availableOperators.map(op => <option key={op} value={op}>{OPERATOR_LABELS[op]}</option>)}
                 </select>
               </div>
-              <div className="flex-1">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 block">Valeur</label>
-                <input
-                  type={selectedColumnDef?.type === 'number' ? 'number' : 'text'}
-                  value={newValue}
-                  onChange={e => setNewValue(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && addRule()}
-                  placeholder="..."
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600"
-                />
+              <div className="flex gap-2 flex-1 min-w-0">
+                <div className="flex-1 min-w-0">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 block">Valeur</label>
+                  <input
+                    type={selectedColumnDef?.type === 'number' ? 'number' : 'text'}
+                    value={newValue}
+                    onChange={e => setNewValue(e.target.value)}
+                    onKeyDown={e => e.key === 'Enter' && addRule()}
+                    placeholder="..."
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600"
+                  />
+                </div>
+                <button
+                  onClick={addRule}
+                  className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex-shrink-0 self-end"
+                >
+                  <Plus size={16} />
+                </button>
               </div>
-              <button
-                onClick={addRule}
-                className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex-shrink-0"
-              >
-                <Plus size={16} />
-              </button>
             </div>
 
             {rules.length > 0 && (

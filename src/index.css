@@ -9,4 +9,26 @@
 body {
   margin: 0;
   background: #FDFDFD;
+  overflow-x: hidden;
+}
+
+/* Prevent horizontal overflow on all containers */
+html {
+  overflow-x: hidden;
+}
+
+/* Ensure touch targets are large enough on mobile */
+@media (max-width: 640px) {
+  button, a, [role="button"] {
+    min-height: 36px;
+  }
+
+  /* Hide scrollbars on horizontal scroll containers */
+  .overflow-x-auto {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .overflow-x-auto::-webkit-scrollbar {
+    display: none;
+  }
 }

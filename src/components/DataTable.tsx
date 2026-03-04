@@ -81,7 +81,7 @@ export default function DataTable<T>({ columns, data, onRowClick, emptyIcon, emp
 
   return (
     <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto -mx-px">
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="bg-slate-50 border-b border-slate-200">
@@ -94,7 +94,7 @@ export default function DataTable<T>({ columns, data, onRowClick, emptyIcon, emp
                     onDragStart={() => handleDragStart(col.key)}
                     onDragOver={(e) => handleDragOver(e, col.key)}
                     onDragEnd={handleDragEnd}
-                    className={`px-6 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest select-none relative group ${draggedCol === col.key ? 'opacity-50' : ''}`}
+                    className={`px-3 sm:px-6 py-3 sm:py-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest select-none relative group ${draggedCol === col.key ? 'opacity-50' : ''}`}
                     style={w ? { width: w, minWidth: w } : undefined}
                   >
                     <div className="flex items-center gap-1.5 cursor-grab active:cursor-grabbing">
@@ -125,7 +125,7 @@ export default function DataTable<T>({ columns, data, onRowClick, emptyIcon, emp
                   return (
                     <td
                       key={col.key}
-                      className="px-6 py-5"
+                      className="px-3 sm:px-6 py-3 sm:py-5"
                       style={w ? { width: w, minWidth: w } : undefined}
                     >
                       {col.render(item)}

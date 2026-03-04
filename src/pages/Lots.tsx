@@ -119,18 +119,18 @@ export default function Lots() {
             <h1 className="text-3xl font-light tracking-tight text-slate-900">Lots</h1>
             <p className="text-slate-500 text-sm mt-1">Tous les lots de votre parc immobilier</p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
             <div className="relative group">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors" size={18} />
-              <input type="text" placeholder="Rechercher..." className="pl-10 pr-4 py-2.5 w-64 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600 transition-all placeholder:text-slate-400" value={search} onChange={e => setSearch(e.target.value)} />
+              <input type="text" placeholder="Rechercher..." className="pl-10 pr-4 py-2.5 w-full sm:w-64 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600 transition-all placeholder:text-slate-400" value={search} onChange={e => setSearch(e.target.value)} />
             </div>
             <button onClick={() => setShowCreateModal(true)} className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"><Plus size={18} /> Nouveau lot</button>
           </div>
         </div>
       </header>
 
-      <div className="flex items-center gap-4 mb-6">
-        <div className="flex items-center gap-2 p-1 bg-slate-100/50 rounded-xl border border-slate-200/60 w-fit">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6 overflow-x-auto">
+        <div className="flex items-center gap-2 p-1 bg-slate-100/50 rounded-xl border border-slate-200/60 w-fit flex-shrink-0">
           {(['Tous', 'appartement', 'maison', 'box_parking', 'bureau', 'local_commercial'] as const).map(type => (
             <button key={type} onClick={() => setTypeFilter(type)} className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${typeFilter === type ? 'bg-white text-blue-600 shadow-sm border border-slate-200' : 'text-slate-500 hover:text-slate-900'}`}>
               {type === 'Tous' ? 'Tous' : getTypeLabel(type)}

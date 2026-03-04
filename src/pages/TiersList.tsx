@@ -127,10 +127,10 @@ export default function TiersList() {
             <h1 className="text-3xl font-light tracking-tight text-slate-900">Tiers</h1>
             <p className="text-slate-500 text-sm mt-1">Proprietaires, mandataires et locataires</p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <div className="relative group">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-blue-600 transition-colors" />
-              <input type="text" placeholder="Rechercher..." className="pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600 transition-all text-sm" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+              <input type="text" placeholder="Rechercher..." className="pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-lg w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600 transition-all text-sm" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
             </div>
             <button onClick={() => setShowCreateModal(true)} className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-lg hover:bg-blue-700 transition-all text-sm font-medium">
               <Plus className="w-4 h-4" /> Nouveau tiers
@@ -140,8 +140,8 @@ export default function TiersList() {
       </header>
 
       {/* Filters */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6 bg-white p-4 border border-slate-200 rounded-lg">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6 bg-white p-4 border border-slate-200 rounded-lg overflow-x-auto">
+        <div className="flex items-center gap-3 flex-shrink-0">
           <div className="flex items-center gap-2 mr-2">
             <Filter className="w-4 h-4 text-slate-400" />
             <span className="text-xs font-bold uppercase text-slate-400">Roles</span>

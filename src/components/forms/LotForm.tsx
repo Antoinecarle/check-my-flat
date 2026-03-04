@@ -59,7 +59,7 @@ export default function LotForm({ onClose, preselectedBatimentId, onOpenBatiment
           {activeBatiments.map(b => <option key={b.id} value={b.id}>{b.designation}{b.numero_batiment ? ` (Bat. ${b.numero_batiment})` : ''}</option>)}
         </select>
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Type de bien *</label>
           <select required value={typeBien} onChange={e => setTypeBien(e.target.value as LotType)} className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600 bg-white">
@@ -76,7 +76,7 @@ export default function LotForm({ onClose, preselectedBatimentId, onOpenBatiment
           <input type="text" value={etage} onChange={e => setEtage(e.target.value)} placeholder="RDC, 1er, 2eme..." className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600" />
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
           <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Numero</label>
           <input type="text" value={numero} onChange={e => setNumero(e.target.value)} placeholder="1, 2, A..." className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600" />
@@ -101,7 +101,7 @@ export default function LotForm({ onClose, preselectedBatimentId, onOpenBatiment
 
       <div className="border-t border-slate-100 pt-5">
         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Informations techniques</p>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Chauffage type</label>
             <select value={chauffageType} onChange={e => setChauffageType(e.target.value as HeatingType)} className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600">

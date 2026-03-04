@@ -63,7 +63,7 @@ export default function TiersForm({ onClose }: TiersFormProps) {
 
       {/* Fields based on type */}
       {typePersn === 'physique' ? (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Nom *</label>
             <input type="text" required value={nom} onChange={e => setNom(e.target.value)} placeholder="Dupont" className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600" />
@@ -86,7 +86,7 @@ export default function TiersForm({ onClose }: TiersFormProps) {
         </>
       )}
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Email</label>
           <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="email@exemple.fr" className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600" />
@@ -101,7 +101,7 @@ export default function TiersForm({ onClose }: TiersFormProps) {
         <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Adresse</label>
         <input type="text" value={adresse} onChange={e => setAdresse(e.target.value)} placeholder="12 Rue Exemple" className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600" />
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Code postal</label>
           <input type="text" value={codePostal} onChange={e => setCodePostal(e.target.value)} placeholder="75000" className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600" />

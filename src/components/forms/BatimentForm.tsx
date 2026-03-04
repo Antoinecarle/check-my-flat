@@ -67,7 +67,7 @@ export default function BatimentForm({ onClose }: BatimentFormProps) {
         <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Designation *</label>
         <input type="text" required value={designation} onChange={e => setDesignation(e.target.value)} placeholder="ex: Residence Les Tilleuls" className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600" />
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Type *</label>
           <select required value={type} onChange={e => setType(e.target.value as BuildingType)} className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600 bg-white">
@@ -113,7 +113,7 @@ export default function BatimentForm({ onClose }: BatimentFormProps) {
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1 block">Rue *</label>
                   <input type="text" required value={addr.rue} onChange={e => updateAddress(addr.id, 'rue', e.target.value)} placeholder="12 Rue des Tilleuls" className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600 bg-white" />
                 </div>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1 block">Code postal *</label>
                     <input type="text" required value={addr.code_postal} onChange={e => updateAddress(addr.id, 'code_postal', e.target.value)} placeholder="78000" className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600 bg-white" />

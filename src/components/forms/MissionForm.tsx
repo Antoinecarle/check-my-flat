@@ -175,7 +175,7 @@ export default function MissionForm({ onClose }: MissionFormProps) {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Date planifiee *</label>
             <input type="date" required value={datePlanifiee} onChange={e => setDatePlanifiee(e.target.value)} className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600" />
@@ -192,7 +192,7 @@ export default function MissionForm({ onClose }: MissionFormProps) {
         </div>
 
         {creneau === 'custom' && (
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Heure debut</label>
               <input type="time" value={heureDebut} onChange={e => setHeureDebut(e.target.value)} className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600" />

@@ -230,7 +230,7 @@ export default function Missions() {
           </div>
           <AdvancedFilter columns={FILTER_COLUMNS} rules={filterRules} onChange={setFilterRules} />
         </div>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-nowrap sm:flex-wrap items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
           {(['toutes', 'planifiee', 'a_assigner', 'en_cours', 'terminee', 'annulee'] as StatusFilter[]).map((s) => (
             <button key={s} onClick={() => setStatusFilter(s)} className={`px-3 py-1.5 rounded-full text-xs font-bold border transition-all ${statusFilter === s ? 'bg-blue-600 border-blue-600 text-white' : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300'}`}>
               {s === 'toutes' ? 'Toutes' : STATUS_CONFIG[s as keyof typeof STATUS_CONFIG]?.label || s}
@@ -260,13 +260,13 @@ export default function Missions() {
             />
           </motion.div>
         ) : (
-          <motion.div key="calendar" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="grid grid-cols-7 gap-px bg-slate-200 border border-slate-200 rounded-xl overflow-hidden">
+          <motion.div key="calendar" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-px bg-slate-200 border border-slate-200 rounded-xl overflow-hidden">
             {Array.from({ length: 7 }).map((_, idx) => {
               const day = addDays(startOfWeek(currentDate, { weekStartsOn: 1 }), idx);
               const dayMissions = filteredMissions.filter(m => isSameDay(parseISO(m.date_planifiee), day));
               const isToday = isSameDay(day, new Date(2026, 1, 26));
               return (
-                <div key={idx} className="bg-slate-50 min-h-[400px] flex flex-col">
+                <div key={idx} className="bg-slate-50 min-h-[200px] lg:min-h-[400px] flex flex-col">
                   <div className={`p-4 border-b border-slate-200 ${isToday ? 'bg-blue-50/50' : 'bg-white'}`}>
                     <p className={`text-[10px] font-bold uppercase tracking-widest ${isToday ? 'text-blue-600' : 'text-slate-400'}`}>{format(day, 'EEEE', { locale: fr })}</p>
                     <p className={`text-xl font-light ${isToday ? 'text-blue-700 font-bold' : 'text-slate-900'}`}>{format(day, 'd')}</p>

@@ -54,7 +54,7 @@ export default function LotDetail() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
-          <section className="bg-white border border-slate-200 rounded-xl p-8">
+          <section className="bg-white border border-slate-200 rounded-xl p-4 sm:p-8">
             <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Caracteristiques</h3>
             <dl className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-6">
               <div><dt className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">Etage</dt><dd className="text-sm font-medium text-slate-900">{lot.etage || '—'}</dd></div>
@@ -63,7 +63,7 @@ export default function LotDetail() {
             </dl>
           </section>
 
-          <section className="bg-white border border-slate-200 rounded-xl p-8">
+          <section className="bg-white border border-slate-200 rounded-xl p-4 sm:p-8">
             <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Informations techniques</h3>
             <dl className="grid grid-cols-2 gap-x-8 gap-y-6">
               <div><dt className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1"><Flame size={12} /> Chauffage</dt><dd className="text-sm font-medium text-slate-900">{label(lot.chauffage_type || '')} — {label(lot.chauffage_mode || '')}</dd></div>
@@ -71,7 +71,7 @@ export default function LotDetail() {
             </dl>
           </section>
 
-          <section className="bg-white border border-slate-200 rounded-xl p-8">
+          <section className="bg-white border border-slate-200 rounded-xl p-4 sm:p-8">
             <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Tiers lies</h3>
             <div className="space-y-4">
               {proprietaires.map(p => p && (

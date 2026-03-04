@@ -73,7 +73,7 @@ export default function DocumentDetail() {
         <div className="lg:col-span-2 space-y-8">
           {/* Lot section */}
           {lot && (
-            <section className="bg-white border border-slate-200 rounded-xl p-8">
+            <section className="bg-white border border-slate-200 rounded-xl p-4 sm:p-8">
               <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Lot</h3>
               <Link to={`/lots/${lot.id}`} className="flex items-center gap-4 p-4 rounded-lg border border-slate-100 hover:bg-slate-50 transition-colors">
                 <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 border border-blue-100">
@@ -90,7 +90,7 @@ export default function DocumentDetail() {
           )}
 
           {/* Locataires */}
-          <section className="bg-white border border-slate-200 rounded-xl p-8">
+          <section className="bg-white border border-slate-200 rounded-xl p-4 sm:p-8">
             <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Locataire(s)</h3>
             <div className="space-y-3">
               {locataires.length > 0 ? locataires.map(l => l && (
@@ -111,7 +111,7 @@ export default function DocumentDetail() {
 
           {/* Mission liee */}
           {mission && (
-            <section className="bg-white border border-slate-200 rounded-xl p-8">
+            <section className="bg-white border border-slate-200 rounded-xl p-4 sm:p-8">
               <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Mission liee</h3>
               <Link to={`/missions/${mission.id}`} className="flex items-center gap-4 p-4 rounded-lg border border-slate-100 hover:bg-slate-50 transition-colors">
                 <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 border border-blue-100">

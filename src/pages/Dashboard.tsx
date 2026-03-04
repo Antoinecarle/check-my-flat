@@ -162,7 +162,7 @@ export default function Dashboard() {
 
       {/* Period toggle + Chart cards */}
       <section className="mb-12">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
           <h2 className="text-xs uppercase tracking-widest font-semibold text-slate-900">Statistiques</h2>
           <div className="flex bg-slate-100 border border-slate-200 rounded-lg p-1">
             <button onClick={() => setPeriod('semaine')} className={`px-4 py-1.5 text-xs font-bold rounded transition-all ${period === 'semaine' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>Cette semaine</button>
