@@ -1,23 +1,19 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Building2,
-  DoorOpen,
   CalendarCheck,
   ChevronRight,
   Clock,
-  User,
   MapPin,
   Circle,
   UserPlus,
   ChevronDown,
-  Check,
   FileText,
 } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import { useRole } from '../contexts/RoleContext';
-import { users, workspaceUsers } from '../data/fake';
-import { format, parseISO, isAfter, isBefore, addDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
+import { workspaceUsers, users } from '../data/fake';
+import { format, parseISO, isAfter, startOfWeek, endOfWeek, startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
 import { fr } from 'date-fns/locale';
 
 function TechAssignDropdown({ missionId, onAssign }: { missionId: string; onAssign: (missionId: string, techId: string) => void }) {
@@ -72,7 +68,7 @@ function TechAssignDropdown({ missionId, onAssign }: { missionId: string; onAssi
 type DashPeriod = 'semaine' | 'mois';
 
 export default function Dashboard() {
-  const { batiments, lots, missions, edls, getLotById, getBatimentById, getUserById, updateMission } = useData();
+  const { missions, edls, getLotById, getBatimentById, getUserById, updateMission } = useData();
   const { role, currentUser, currentUserId } = useRole();
 
   const now = new Date(2026, 1, 26);

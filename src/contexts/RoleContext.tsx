@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
-import { users, workspaceUsers } from '../data/fake';
+import { users } from '../data/fake';
 
 export type AppRole = 'admin' | 'technicien';
 

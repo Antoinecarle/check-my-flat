@@ -6,8 +6,6 @@ import {
   edls as initialEdls,
   tiers as initialTiers,
   users,
-  workspaceUsers,
-  workspace,
 } from '../data/fake';
 import type { Batiment, Lot, Mission, Edl, Tiers } from '../data/types';
 

@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Search, Plus, User, Building2, Mail, Phone, MapPin, ChevronRight, Filter, Users } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Search, Plus, User, Building2, Mail, Phone, MapPin, Filter, Users } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import type { TiersRole, TiersPersonType } from '../data/types';
 import AdvancedFilter, { applyFilters, type FilterRule, type ColumnDef } from '../components/AdvancedFilter';

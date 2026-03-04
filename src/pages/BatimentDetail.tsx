@@ -1,11 +1,10 @@
 import { useState, useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Pencil, Building2, MapPin, Calendar, Maximize2, Layers, Info, ChevronRight, BedDouble, Home, CalendarCheck, CheckCircle2, Timer, XCircle, UserPlus } from 'lucide-react';
+import { ArrowLeft, Plus, Pencil, Building2, MapPin, Calendar, Maximize2, Layers, Info, ChevronRight, BedDouble, Home, CalendarCheck } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import DataTable, { type Column } from '../components/DataTable';
 import Modal from '../components/Modal';
 import LotForm from '../components/forms/LotForm';
-import type { Mission } from '../data/types';
 
 const getTypeLabel = (type: string) => {
   const map: Record<string, string> = { immeuble: 'Immeuble', maison: 'Maison', local_commercial: 'Local Commercial', mixte: 'Mixte', appartement: 'Appartement', box_parking: 'Box Parking', bureau: 'Bureau', autre: 'Autre' };

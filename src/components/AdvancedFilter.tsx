@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Filter, Plus, X, ChevronDown } from 'lucide-react';
+import { Filter, Plus, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export interface FilterRule {

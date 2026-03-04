@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, CalendarCheck, MapPin, Clock, Calendar, Timer, CheckCircle2, XCircle, UserPlus, FileText } from 'lucide-react';
+import { ArrowLeft, CalendarCheck, MapPin, Calendar, Timer, CheckCircle2, XCircle, UserPlus, FileText } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { useData } from '../contexts/DataContext';

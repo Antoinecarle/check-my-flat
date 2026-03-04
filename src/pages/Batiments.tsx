@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Plus, Search, Building2, Home, Store, Layers, ChevronRight, FilterX, Archive } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Plus, Search, Building2, Home, Store, Layers, FilterX, Archive } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import { useRole } from '../contexts/RoleContext';
 import type { BuildingType } from '../data/types';
