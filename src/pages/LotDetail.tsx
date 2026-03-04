@@ -55,24 +55,24 @@ export default function LotDetail() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           <section className="bg-white border border-slate-200 rounded-xl p-8">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Caracteristiques</h3>
+            <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Caracteristiques</h3>
             <dl className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-6">
-              <div><dt className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Etage</dt><dd className="text-sm font-medium text-slate-900">{lot.etage || '—'}</dd></div>
-              <div><dt className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Surface</dt><dd className="text-sm font-medium text-slate-900 flex items-center gap-1"><Maximize2 size={14} className="text-slate-300" />{lot.surface ? `${lot.surface} m2` : '—'}</dd></div>
-              <div><dt className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Pieces</dt><dd className="text-sm font-medium text-slate-900 flex items-center gap-1"><Layers size={14} className="text-slate-300" />{lot.nb_pieces || '—'}</dd></div>
+              <div><dt className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">Etage</dt><dd className="text-sm font-medium text-slate-900">{lot.etage || '—'}</dd></div>
+              <div><dt className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">Surface</dt><dd className="text-sm font-medium text-slate-900 flex items-center gap-1"><Maximize2 size={14} className="text-slate-300" />{lot.surface ? `${lot.surface} m2` : '—'}</dd></div>
+              <div><dt className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">Pieces</dt><dd className="text-sm font-medium text-slate-900 flex items-center gap-1"><Layers size={14} className="text-slate-300" />{lot.nb_pieces || '—'}</dd></div>
             </dl>
           </section>
 
           <section className="bg-white border border-slate-200 rounded-xl p-8">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Informations techniques</h3>
+            <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Informations techniques</h3>
             <dl className="grid grid-cols-2 gap-x-8 gap-y-6">
-              <div><dt className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1"><Flame size={12} /> Chauffage</dt><dd className="text-sm font-medium text-slate-900">{label(lot.chauffage_type || '')} — {label(lot.chauffage_mode || '')}</dd></div>
-              <div><dt className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1"><Droplets size={12} /> Eau chaude</dt><dd className="text-sm font-medium text-slate-900">{label(lot.eau_chaude_type || '')} — {label(lot.eau_chaude_mode || '')}</dd></div>
+              <div><dt className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1"><Flame size={12} /> Chauffage</dt><dd className="text-sm font-medium text-slate-900">{label(lot.chauffage_type || '')} — {label(lot.chauffage_mode || '')}</dd></div>
+              <div><dt className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1"><Droplets size={12} /> Eau chaude</dt><dd className="text-sm font-medium text-slate-900">{label(lot.eau_chaude_type || '')} — {label(lot.eau_chaude_mode || '')}</dd></div>
             </dl>
           </section>
 
           <section className="bg-white border border-slate-200 rounded-xl p-8">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Tiers lies</h3>
+            <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Tiers lies</h3>
             <div className="space-y-4">
               {proprietaires.map(p => p && (
                 <Link to={`/tiers/${p.id}`} key={p.id} className="flex items-center gap-4 p-4 rounded-lg border border-slate-100 hover:bg-slate-50 transition-colors">
@@ -99,7 +99,7 @@ export default function LotDetail() {
 
         <div className="space-y-6">
           <div className="bg-slate-900 rounded-xl p-6 text-white">
-            <h4 className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-4">Activite</h4>
+            <h4 className="text-slate-400 text-[10px] font-semibold uppercase tracking-widest mb-4">Activite</h4>
             <div className="space-y-6">
               <div className="flex items-center gap-3">
                 <CalendarCheck size={20} className="text-blue-400" />
@@ -115,7 +115,7 @@ export default function LotDetail() {
 
           {missions.length > 0 && (
             <div className="bg-white border border-slate-200 rounded-xl p-6">
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Dernieres missions</h4>
+              <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">Dernieres missions</h4>
               <div className="space-y-3">
                 {missions.slice(0, 3).map(m => (
                   <div key={m.id} className="flex items-center justify-between p-3 border border-slate-100 rounded-lg">

@@ -137,7 +137,7 @@ export default function MissionDetail() {
           {/* Commentaire */}
           {mission.commentaire && (
             <section className="bg-white border border-slate-200 rounded-xl p-8">
-              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Commentaire</h3>
+              <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">Commentaire</h3>
               <p className="text-sm text-slate-700 leading-relaxed">{mission.commentaire}</p>
             </section>
           )}
@@ -146,7 +146,7 @@ export default function MissionDetail() {
         {/* Right sidebar */}
         <div className="space-y-6">
           <div className="bg-slate-900 rounded-xl p-6 text-white">
-            <h4 className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-4">Statut</h4>
+            <h4 className="text-slate-400 text-[10px] font-semibold uppercase tracking-widest mb-4">Statut</h4>
             <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold uppercase ${statusCfg?.color || ''}`}>
               <StatusIcon size={14} />{statusCfg?.label || mission.statut}
             </div>
@@ -154,7 +154,7 @@ export default function MissionDetail() {
 
           {/* Documents lies */}
           <div className="bg-white border border-slate-200 rounded-xl p-6">
-            <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Documents lies ({linkedEdls.length})</h4>
+            <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">Documents lies ({linkedEdls.length})</h4>
             <div className="space-y-3">
               {linkedEdls.length > 0 ? linkedEdls.map(edl => {
                 const tCfg = TYPE_CONFIG[edl.type as keyof typeof TYPE_CONFIG];

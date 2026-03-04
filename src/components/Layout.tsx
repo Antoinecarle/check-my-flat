@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -15,6 +15,8 @@ import {
   CheckCircle2,
   Shield,
   Wrench,
+  Menu,
+  X,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRole, type AppRole } from '../contexts/RoleContext';
@@ -35,13 +37,43 @@ const secondaryItems = [
   { name: 'Parametres', path: '/settings', icon: Settings },
 ];
 
+function useIsDesktop() {
+  const [isDesktop, setIsDesktop] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth >= 1024 : true
+  );
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+  return isDesktop;
+}
+
 export default function Layout() {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isDesktop = useIsDesktop();
   const location = useLocation();
   const { role, setRole, currentUser } = useRole();
 
   const initials = `${currentUser.prenom[0]}${currentUser.nom[0]}`;
   const roleLabel = role === 'admin' ? 'Administrateur' : 'Technicien';
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isMobileMenuOpen]);
 
   return (
     <div className="min-h-screen bg-[#FDFDFD] text-slate-900 font-sans selection:bg-blue-100">
@@ -50,11 +82,131 @@ export default function Layout() {
            style={{ backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', backgroundSize: '40px 40px' }}
       />
 
-      {/* Sidebar */}
+      {/* Mobile header */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 h-14 bg-white border-b border-slate-200 z-40 flex items-center justify-between px-4">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="p-2 -ml-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+          >
+            <Menu size={20} />
+          </button>
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 bg-slate-900 rounded flex items-center justify-center">
+              <div className="relative">
+                <Home size={14} className="text-white" strokeWidth={2.5} />
+                <CheckCircle2 size={8} className="absolute -bottom-1 -right-1 text-blue-400 bg-slate-900 rounded-full" />
+              </div>
+            </div>
+            <span className="font-semibold text-sm tracking-tight text-slate-900">ImmoChecker</span>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setRole(role === 'admin' ? 'technicien' : 'admin')}
+            className="p-2 bg-slate-100 rounded-lg"
+          >
+            {role === 'admin' ? <Shield size={16} className="text-blue-600" /> : <Wrench size={16} className="text-amber-600" />}
+          </button>
+          <button className="relative p-2 text-slate-400 hover:text-slate-600 rounded-lg">
+            <Bell size={18} />
+            <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-blue-600 rounded-full ring-2 ring-white" />
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile menu overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="lg:hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+            <motion.aside
+              initial={{ x: -280 }}
+              animate={{ x: 0 }}
+              exit={{ x: -280 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              className="lg:hidden fixed top-0 left-0 h-screen w-[280px] bg-white z-50 flex flex-col shadow-2xl"
+            >
+              {/* Mobile sidebar header */}
+              <div className="px-5 pt-5 pb-3 border-b border-slate-100">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="flex-shrink-0 w-8 h-8 bg-slate-900 rounded flex items-center justify-center">
+                      <div className="relative">
+                        <Home size={16} className="text-white" strokeWidth={2.5} />
+                        <CheckCircle2 size={10} className="absolute -bottom-1 -right-1 text-blue-400 bg-slate-900 rounded-full" />
+                      </div>
+                    </div>
+                    <div className="flex flex-col min-w-0">
+                      <span className="font-semibold text-sm tracking-tight text-slate-900 whitespace-nowrap">ImmoChecker</span>
+                      <span className="text-[10px] text-slate-400 font-medium whitespace-nowrap">FlatChecker SAS</span>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
+
+                {/* Role Switcher */}
+                <div className="mt-3 flex p-0.5 bg-slate-100 rounded-lg">
+                  {(['admin', 'technicien'] as AppRole[]).map((r) => (
+                    <button
+                      key={r}
+                      onClick={() => setRole(r)}
+                      className={`flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 rounded-md text-[11px] font-bold uppercase tracking-wider transition-all ${
+                        role === r
+                          ? 'bg-white text-blue-600 shadow-sm'
+                          : 'text-slate-400 hover:text-slate-600'
+                      }`}
+                    >
+                      {r === 'admin' ? <Shield size={12} /> : <Wrench size={12} />}
+                      {r === 'admin' ? 'Admin' : 'Tech'}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Mobile nav */}
+              <nav className="flex-1 px-3 pt-4 space-y-1 overflow-y-auto">
+                {navigationItems.map((item) => (
+                  <NavItem key={item.path} item={item} isCollapsed={false} />
+                ))}
+                <div className="my-4 px-2"><div className="h-px bg-slate-100" /></div>
+                {secondaryItems.map((item) => (
+                  <NavItem key={item.path} item={item} isCollapsed={false} />
+                ))}
+              </nav>
+
+              {/* Mobile bottom */}
+              <div className="border-t border-slate-100 px-3 py-3 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0 ring-2 ring-slate-100">
+                  {initials}
+                </div>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-xs font-bold text-slate-900 leading-none truncate">{currentUser.prenom} {currentUser.nom}</span>
+                  <span className="text-[10px] text-slate-500 font-medium">{roleLabel}</span>
+                </div>
+              </div>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Desktop Sidebar */}
       <motion.aside
         initial={false}
         animate={{ width: isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH }}
-        className="fixed top-0 left-0 h-screen bg-white border-r border-slate-200 z-30 flex flex-col"
+        className="hidden lg:flex fixed top-0 left-0 h-screen bg-white border-r border-slate-200 z-30 flex-col"
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
         {/* Logo + Workspace */}
@@ -177,11 +329,11 @@ export default function Layout() {
 
       {/* Main area */}
       <div
-        className="transition-all duration-300 ease-in-out"
-        style={{ marginLeft: isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH }}
+        className="transition-all duration-300 ease-in-out pt-14 lg:pt-0"
+        style={{ marginLeft: isDesktop ? (isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH) : 0 }}
       >
         {/* Content */}
-        <main className="px-8 pt-6 pb-8 relative z-10 max-w-7xl mx-auto">
+        <main className="px-4 sm:px-6 lg:px-8 pt-6 pb-8 relative z-10 max-w-7xl mx-auto">
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}

@@ -64,18 +64,18 @@ export default function TiersDetail() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           <section className="bg-white border border-slate-200 rounded-xl p-8">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Coordonnees</h3>
+            <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Coordonnees</h3>
             <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
-              {tier.email && <div><dt className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1"><Mail size={12} /> Email</dt><dd className="text-sm font-medium text-slate-900">{tier.email}</dd></div>}
-              {tier.telephone && <div><dt className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1"><Phone size={12} /> Telephone</dt><dd className="text-sm font-medium text-slate-900">{tier.telephone}</dd></div>}
-              {tier.adresse && <div><dt className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1"><MapPin size={12} /> Adresse</dt><dd className="text-sm font-medium text-slate-900">{tier.adresse}, {tier.code_postal} {tier.ville}</dd></div>}
-              {tier.siren && <div><dt className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1"><Hash size={12} /> SIREN</dt><dd className="text-sm font-medium text-slate-900 font-mono">{tier.siren}</dd></div>}
+              {tier.email && <div><dt className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1"><Mail size={12} /> Email</dt><dd className="text-sm font-medium text-slate-900">{tier.email}</dd></div>}
+              {tier.telephone && <div><dt className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1"><Phone size={12} /> Telephone</dt><dd className="text-sm font-medium text-slate-900">{tier.telephone}</dd></div>}
+              {tier.adresse && <div><dt className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1"><MapPin size={12} /> Adresse</dt><dd className="text-sm font-medium text-slate-900">{tier.adresse}, {tier.code_postal} {tier.ville}</dd></div>}
+              {tier.siren && <div><dt className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1"><Hash size={12} /> SIREN</dt><dd className="text-sm font-medium text-slate-900 font-mono">{tier.siren}</dd></div>}
             </dl>
           </section>
 
           {ownedLots.length > 0 && (
             <section className="bg-white border border-slate-200 rounded-xl p-8">
-              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Lots possedes ({ownedLots.length})</h3>
+              <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Lots possedes ({ownedLots.length})</h3>
               <div className="space-y-3">
                 {ownedLots.map(lot => {
                   const bat = batiments.find(b => b.id === lot.batiment_id);
@@ -98,7 +98,7 @@ export default function TiersDetail() {
 
           {managedLots.length > 0 && (
             <section className="bg-white border border-slate-200 rounded-xl p-8">
-              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Lots en gestion ({managedLots.length})</h3>
+              <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Lots en gestion ({managedLots.length})</h3>
               <div className="space-y-3">
                 {managedLots.map(lot => {
                   const bat = batiments.find(b => b.id === lot.batiment_id);
@@ -121,7 +121,7 @@ export default function TiersDetail() {
 
         <div>
           <div className="bg-slate-900 rounded-xl p-6 text-white">
-            <h4 className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-4">Resume</h4>
+            <h4 className="text-slate-400 text-[10px] font-semibold uppercase tracking-widest mb-4">Resume</h4>
             <div className="space-y-6">
               <div><p className="text-3xl font-bold">{ownedLots.length}</p><p className="text-slate-400 text-xs">Lots possedes</p></div>
               <div className="h-px bg-slate-800" />

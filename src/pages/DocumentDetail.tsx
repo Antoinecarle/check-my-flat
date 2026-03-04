@@ -74,7 +74,7 @@ export default function DocumentDetail() {
           {/* Lot section */}
           {lot && (
             <section className="bg-white border border-slate-200 rounded-xl p-8">
-              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Lot</h3>
+              <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Lot</h3>
               <Link to={`/lots/${lot.id}`} className="flex items-center gap-4 p-4 rounded-lg border border-slate-100 hover:bg-slate-50 transition-colors">
                 <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 border border-blue-100">
                   <MapPin size={16} />
@@ -91,7 +91,7 @@ export default function DocumentDetail() {
 
           {/* Locataires */}
           <section className="bg-white border border-slate-200 rounded-xl p-8">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Locataire(s)</h3>
+            <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Locataire(s)</h3>
             <div className="space-y-3">
               {locataires.length > 0 ? locataires.map(l => l && (
                 <Link to={`/tiers/${l.id}`} key={l.id} className="flex items-center gap-4 p-4 rounded-lg border border-slate-100 hover:bg-slate-50 transition-colors">
@@ -112,7 +112,7 @@ export default function DocumentDetail() {
           {/* Mission liee */}
           {mission && (
             <section className="bg-white border border-slate-200 rounded-xl p-8">
-              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Mission liee</h3>
+              <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Mission liee</h3>
               <Link to={`/missions/${mission.id}`} className="flex items-center gap-4 p-4 rounded-lg border border-slate-100 hover:bg-slate-50 transition-colors">
                 <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 border border-blue-100">
                   <CalendarCheck size={16} />
@@ -132,7 +132,7 @@ export default function DocumentDetail() {
         {/* Right sidebar */}
         <div className="space-y-6">
           <div className="bg-slate-900 rounded-xl p-6 text-white">
-            <h4 className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-4">Statut</h4>
+            <h4 className="text-slate-400 text-[10px] font-semibold uppercase tracking-widest mb-4">Statut</h4>
             <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold uppercase ${statusCfg?.color || ''}`}>
               <StatusIcon size={14} />{statusCfg?.label || edl.statut}
             </div>

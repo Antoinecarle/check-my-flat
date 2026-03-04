@@ -102,7 +102,7 @@ export default function AdvancedFilter({ columns, rules, onChange }: AdvancedFil
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -4, scale: 0.98 }}
             transition={{ duration: 0.15 }}
-            className="absolute top-full left-0 mt-2 w-[480px] bg-white border border-slate-200 rounded-xl shadow-xl z-50 p-4"
+            className="fixed inset-x-3 top-auto bottom-3 sm:absolute sm:inset-auto sm:top-full sm:left-0 sm:bottom-auto sm:mt-2 sm:w-[480px] bg-white border border-slate-200 rounded-xl shadow-xl z-50 p-4"
           >
             <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Ajouter un filtre</div>
             <div className="flex items-end gap-2 mb-4">

@@ -226,23 +226,23 @@ export default function BatimentDetail() {
             <section className="bg-white border border-slate-200 rounded-xl p-8">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2 bg-blue-50 rounded-lg"><Info className="w-5 h-5 text-blue-600" /></div>
-                <h3 className="text-lg font-bold text-slate-900">Details structurels</h3>
+                <h3 className="text-lg font-semibold text-slate-900">Details structurels</h3>
               </div>
               <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
                 <div>
-                  <dt className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Type</dt>
+                  <dt className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">Type</dt>
                   <dd className="text-sm font-medium text-slate-900">{getTypeLabel(batiment.type)}</dd>
                 </div>
                 <div>
-                  <dt className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Annee de construction</dt>
+                  <dt className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">Annee de construction</dt>
                   <dd className="text-sm font-medium text-slate-900">{batiment.annee_construction || 'N/A'}</dd>
                 </div>
                 <div>
-                  <dt className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Numero du batiment</dt>
+                  <dt className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">Numero du batiment</dt>
                   <dd className="text-sm font-medium text-slate-900">{batiment.numero_batiment || 'N/A'}</dd>
                 </div>
                 <div>
-                  <dt className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Nombre de lots</dt>
+                  <dt className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">Nombre de lots</dt>
                   <dd className="text-sm font-medium text-slate-900">{lots.length} unites</dd>
                 </div>
               </dl>
@@ -251,7 +251,7 @@ export default function BatimentDetail() {
             <section className="bg-white border border-slate-200 rounded-xl p-8">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2 bg-slate-50 rounded-lg"><MapPin className="w-5 h-5 text-slate-600" /></div>
-                <h3 className="text-lg font-bold text-slate-900">Adresses</h3>
+                <h3 className="text-lg font-semibold text-slate-900">Adresses</h3>
               </div>
               <div className="space-y-4">
                 {batiment.adresses.map((addr) => (
@@ -271,7 +271,7 @@ export default function BatimentDetail() {
           <div>
             <div className="bg-slate-900 rounded-xl p-6 text-white overflow-hidden relative">
               <div className="relative z-10">
-                <h4 className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-4">Statistiques</h4>
+                <h4 className="text-slate-400 text-[10px] font-semibold uppercase tracking-widest mb-4">Statistiques</h4>
                 <div className="space-y-6">
                   <div>
                     <p className="text-3xl font-bold">{lots.length}</p>

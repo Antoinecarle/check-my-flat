@@ -163,7 +163,7 @@ export default function Dashboard() {
       {/* Period toggle + Chart cards */}
       <section className="mb-12">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xs uppercase tracking-widest font-black text-slate-900">Statistiques</h2>
+          <h2 className="text-xs uppercase tracking-widest font-semibold text-slate-900">Statistiques</h2>
           <div className="flex bg-slate-100 border border-slate-200 rounded-lg p-1">
             <button onClick={() => setPeriod('semaine')} className={`px-4 py-1.5 text-xs font-bold rounded transition-all ${period === 'semaine' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>Cette semaine</button>
             <button onClick={() => setPeriod('mois')} className={`px-4 py-1.5 text-xs font-bold rounded transition-all ${period === 'mois' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>Ce mois</button>
@@ -176,7 +176,7 @@ export default function Dashboard() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <CalendarCheck size={18} className="text-blue-600" />
-                <h3 className="text-sm font-bold text-slate-900">Missions</h3>
+                <h3 className="text-sm font-semibold text-slate-900">Missions</h3>
               </div>
               <span className="text-2xl font-bold text-slate-900">{missionStats.total}</span>
             </div>
@@ -204,7 +204,7 @@ export default function Dashboard() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <FileText size={18} className="text-violet-600" />
-                <h3 className="text-sm font-bold text-slate-900">EDL</h3>
+                <h3 className="text-sm font-semibold text-slate-900">EDL</h3>
               </div>
               <span className="text-2xl font-bold text-slate-900">{edlStats.total}</span>
             </div>
@@ -231,7 +231,7 @@ export default function Dashboard() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <FileText size={18} className="text-purple-600" />
-                <h3 className="text-sm font-bold text-slate-900">Inventaires</h3>
+                <h3 className="text-sm font-semibold text-slate-900">Inventaires</h3>
               </div>
               <span className="text-2xl font-bold text-slate-900">{inventaireStats.total}</span>
             </div>
@@ -249,7 +249,7 @@ export default function Dashboard() {
           {role === 'admin' && unassignedMissions.length > 0 && (
             <section>
               <div className="flex items-center justify-between mb-6 pb-2 border-b border-slate-900/10">
-                <h2 className="text-xs uppercase tracking-widest font-black text-slate-900 flex items-center gap-2">
+                <h2 className="text-xs uppercase tracking-widest font-semibold text-slate-900 flex items-center gap-2">
                   <Circle size={8} className="fill-amber-500 text-amber-500" />
                   Missions a assigner
                   <span className="ml-1 px-2 py-0.5 rounded-full text-[10px] bg-amber-100 text-amber-700 font-bold">{unassignedMissions.length}</span>
@@ -289,7 +289,7 @@ export default function Dashboard() {
           {/* Missions a venir */}
           <section>
             <div className="flex items-center justify-between mb-6 pb-2 border-b border-slate-900/10">
-              <h2 className="text-xs uppercase tracking-widest font-black text-slate-900 flex items-center gap-2">
+              <h2 className="text-xs uppercase tracking-widest font-semibold text-slate-900 flex items-center gap-2">
                 <Circle size={8} className="fill-blue-600 text-blue-600" />
                 {role === 'technicien' ? 'Mes prochaines missions' : 'Missions a venir'}
                 <span className="ml-1 px-2 py-0.5 rounded-full text-[10px] bg-blue-100 text-blue-700 font-bold">{upcomingMissions.length}</span>
@@ -349,7 +349,7 @@ export default function Dashboard() {
 
         <section className="lg:col-span-4">
           <div className="flex items-center justify-between mb-6 pb-2 border-b border-slate-900/10">
-            <h2 className="text-xs uppercase tracking-widest font-black text-slate-900">Activite recente</h2>
+            <h2 className="text-xs uppercase tracking-widest font-semibold text-slate-900">Activite recente</h2>
           </div>
           <div className="bg-white border border-slate-200 p-6">
             <ActivityItem title="EDL signe" detail="Lot #4, Residence Les Tilleuls" time="2h" />

@@ -12,9 +12,9 @@ interface ModalProps {
 }
 
 const SIZE_MAP = {
-  sm: 'max-w-md',
-  md: 'max-w-lg',
-  lg: 'max-w-2xl',
+  sm: 'sm:max-w-md',
+  md: 'sm:max-w-lg',
+  lg: 'sm:max-w-2xl',
 };
 
 export default function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalProps) {
@@ -35,7 +35,7 @@ export default function Modal({ isOpen, onClose, title, children, size = 'md' }:
   return createPortal(
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -52,11 +52,11 @@ export default function Modal({ isOpen, onClose, title, children, size = 'md' }:
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 8 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className={`relative bg-white rounded-xl shadow-2xl w-full mx-4 ${SIZE_MAP[size]} max-h-[90vh] overflow-y-auto`}
+            className={`relative bg-white rounded-t-xl sm:rounded-xl shadow-2xl w-full sm:mx-4 ${SIZE_MAP[size]} max-h-[100dvh] sm:max-h-[90vh] overflow-y-auto`}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-              <h2 className="text-lg font-bold text-slate-900">{title}</h2>
+            <div className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-slate-100 sticky top-0 bg-white z-10">
+              <h2 className="text-base sm:text-lg font-bold text-slate-900">{title}</h2>
               <button
                 onClick={onClose}
                 className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-all"
@@ -65,7 +65,7 @@ export default function Modal({ isOpen, onClose, title, children, size = 'md' }:
               </button>
             </div>
             {/* Body */}
-            <div className="p-6">
+            <div className="p-4 sm:p-6">
               {children}
             </div>
           </motion.div>
