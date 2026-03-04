@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "th-o-product-manager": {
+      "type": "sse",
+      "url": "https://guru-api-production.up.railway.app/mcp/th-o-product-manager/sse?key=gru_ddd96690a5e4ca782f86fc5e832d04cff12daa798d2e5fe631d181137100fdc3"
+    }
+  }
+}

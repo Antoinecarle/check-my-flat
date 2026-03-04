@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { RoleProvider } from './contexts/RoleContext';
 import { DataProvider } from './contexts/DataContext';
 import Layout from './components/Layout';
@@ -10,7 +10,9 @@ import LotDetail from './pages/LotDetail';
 import TiersList from './pages/TiersList';
 import TiersDetail from './pages/TiersDetail';
 import Missions from './pages/Missions';
-import EdlList from './pages/EdlList';
+import MissionDetail from './pages/MissionDetail';
+import Documents from './pages/Documents';
+import DocumentDetail from './pages/DocumentDetail';
 
 export default function App() {
   return (
@@ -27,7 +29,10 @@ export default function App() {
               <Route path="/tiers" element={<TiersList />} />
               <Route path="/tiers/:id" element={<TiersDetail />} />
               <Route path="/missions" element={<Missions />} />
-              <Route path="/edl" element={<EdlList />} />
+              <Route path="/missions/:id" element={<MissionDetail />} />
+              <Route path="/documents" element={<Documents />} />
+              <Route path="/documents/:id" element={<DocumentDetail />} />
+              <Route path="/edl" element={<Navigate to="/documents" replace />} />
               <Route path="/settings" element={<Placeholder title="Parametres" />} />
             </Route>
           </Routes>

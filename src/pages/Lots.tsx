@@ -1,9 +1,10 @@
 import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
-import { Search, Plus, DoorOpen, ChevronRight, BedDouble, Maximize2, Layers, Building2, FilterX } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Search, Plus, DoorOpen, BedDouble, Maximize2, Layers, Building2, FilterX } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import type { LotType } from '../data/types';
 import AdvancedFilter, { applyFilters, type FilterRule, type ColumnDef } from '../components/AdvancedFilter';
+import DataTable, { type Column } from '../components/DataTable';
 import Modal from '../components/Modal';
 import LotForm from '../components/forms/LotForm';
 
@@ -22,6 +23,7 @@ const FILTER_COLUMNS: ColumnDef[] = [
 
 export default function Lots() {
   const { lots, getBatimentById } = useData();
+  const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [typeFilter, setTypeFilter] = useState<LotType | 'Tous'>('Tous');
   const [filterRules, setFilterRules] = useState<FilterRule[]>([]);
@@ -43,6 +45,71 @@ export default function Lots() {
     result = applyFilters(result, filterRules, FILTER_COLUMNS);
     return result;
   }, [enrichedLots, typeFilter, search, filterRules]);
+
+  const columns: Column<typeof filtered[0]>[] = [
+    {
+      key: 'lot',
+      label: 'Lot',
+      minWidth: 200,
+      render: (lot) => (
+        <div className="flex items-center gap-4">
+          <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors border border-slate-200/50">
+            <DoorOpen size={16} />
+          </div>
+          <div>
+            <span className="text-sm font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
+              {lot.numero ? `Lot ${lot.numero}` : 'Lot'} — {getTypeLabel(lot.type_bien)}
+            </span>
+            <div className="flex items-center gap-2 mt-0.5">
+              {lot.meuble && <span className="flex items-center gap-1 text-[10px] bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded border border-amber-100"><BedDouble className="w-3 h-3" /> Meuble</span>}
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      key: 'batiment',
+      label: 'Batiment',
+      minWidth: 150,
+      render: (lot) => (
+        <div>
+          <div className="flex items-center gap-2 text-sm text-slate-600">
+            <Building2 size={14} className="text-slate-400" />
+            <Link to={`/batiments/${lot.batiment_id}`} onClick={e => e.stopPropagation()} className="hover:text-blue-600 transition-colors">{lot.batimentName}</Link>
+          </div>
+          <div className="text-xs text-slate-400 mt-0.5">{lot.batimentAddr}</div>
+        </div>
+      ),
+    },
+    {
+      key: 'etage',
+      label: 'Etage',
+      minWidth: 60,
+      render: (lot) => <span className="text-sm font-medium text-slate-600">{lot.etage || '—'}</span>,
+    },
+    {
+      key: 'surface',
+      label: 'Surface',
+      minWidth: 80,
+      render: (lot) => (
+        <div className="flex items-center gap-2">
+          <Maximize2 className="w-3.5 h-3.5 text-slate-300" />
+          <span className="text-sm font-semibold text-slate-900">{lot.surface ? `${lot.surface} m2` : '—'}</span>
+        </div>
+      ),
+    },
+    {
+      key: 'pieces',
+      label: 'Pieces',
+      minWidth: 60,
+      render: (lot) => (
+        <div className="flex items-center gap-2">
+          <Layers className="w-3.5 h-3.5 text-slate-300" />
+          <span className="text-sm text-slate-600">{lot.nb_pieces || '—'}</span>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <div>
@@ -73,62 +140,16 @@ export default function Lots() {
         <AdvancedFilter columns={FILTER_COLUMNS} rules={filterRules} onChange={setFilterRules} />
       </div>
 
-      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
-        <table className="w-full border-collapse text-left">
-          <thead>
-            <tr className="border-b border-slate-100 bg-slate-50/50">
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Lot</th>
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Batiment</th>
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Etage</th>
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Surface</th>
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Pieces</th>
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider"></th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {filtered.length > 0 ? filtered.map(lot => (
-              <tr key={lot.id} className="group hover:bg-slate-50/80 transition-colors">
-                <td className="px-6 py-5">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors border border-slate-200/50">
-                      <DoorOpen size={16} />
-                    </div>
-                    <div>
-                      <Link to={`/lots/${lot.id}`} className="text-sm font-semibold text-slate-900 hover:text-blue-600 transition-colors">
-                        {lot.numero ? `Lot ${lot.numero}` : 'Lot'} — {getTypeLabel(lot.type_bien)}
-                      </Link>
-                      <div className="flex items-center gap-2 mt-0.5">
-                        {lot.meuble && <span className="flex items-center gap-1 text-[10px] bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded border border-amber-100"><BedDouble className="w-3 h-3" /> Meuble</span>}
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-6 py-5">
-                  <div className="flex items-center gap-2 text-sm text-slate-600">
-                    <Building2 size={14} className="text-slate-400" />
-                    <Link to={`/batiments/${lot.batiment_id}`} className="hover:text-blue-600 transition-colors">{lot.batimentName}</Link>
-                  </div>
-                  <div className="text-xs text-slate-400 mt-0.5">{lot.batimentAddr}</div>
-                </td>
-                <td className="px-6 py-5"><span className="text-sm font-medium text-slate-600">{lot.etage || '—'}</span></td>
-                <td className="px-6 py-5"><div className="flex items-center gap-2"><Maximize2 className="w-3.5 h-3.5 text-slate-300" /><span className="text-sm font-semibold text-slate-900">{lot.surface ? `${lot.surface} m2` : '—'}</span></div></td>
-                <td className="px-6 py-5"><div className="flex items-center gap-2"><Layers className="w-3.5 h-3.5 text-slate-300" /><span className="text-sm text-slate-600">{lot.nb_pieces || '—'}</span></div></td>
-                <td className="px-6 py-5 text-right">
-                  <Link to={`/lots/${lot.id}`} className="opacity-0 group-hover:opacity-100 transition-opacity p-2 text-blue-600 rounded-lg bg-blue-50 inline-flex"><ChevronRight size={18} /></Link>
-                </td>
-              </tr>
-            )) : (
-              <tr><td colSpan={6} className="px-6 py-20 text-center">
-                <div className="flex flex-col items-center gap-3 text-slate-400"><FilterX size={48} strokeWidth={1} /><p className="text-sm">Aucun lot trouve.</p>
-                  <button onClick={() => { setSearch(''); setTypeFilter('Tous'); setFilterRules([]); }} className="text-blue-600 text-sm font-medium hover:underline">Reinitialiser</button>
-                </div>
-              </td></tr>
-            )}
-          </tbody>
-        </table>
-        <div className="bg-slate-50 border-t border-slate-200 px-6 py-3">
-          <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Total: {filtered.length} lots</span>
-        </div>
+      <DataTable
+        columns={columns}
+        data={filtered}
+        onRowClick={(lot) => navigate(`/lots/${lot.id}`)}
+        emptyIcon={<FilterX size={48} strokeWidth={1} className="text-slate-300" />}
+        emptyMessage="Aucun lot trouve."
+      />
+
+      <div className="mt-4 bg-slate-50 border border-slate-200 rounded-lg px-6 py-3">
+        <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Total: {filtered.length} lots</span>
       </div>
 
       <Modal isOpen={showCreateModal} onClose={() => setShowCreateModal(false)} title="Nouveau lot" size="lg">

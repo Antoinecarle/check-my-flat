@@ -1,20 +1,43 @@
 import { useState, useMemo } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Plus, Pencil, Building2, MapPin, Calendar, Maximize2, Layers, Info, ChevronRight, BedDouble, Home } from 'lucide-react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { ArrowLeft, Plus, Pencil, Building2, MapPin, Calendar, Maximize2, Layers, Info, ChevronRight, BedDouble, Home, CalendarCheck, CheckCircle2, Timer, XCircle, UserPlus } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
+import DataTable, { type Column } from '../components/DataTable';
+import Modal from '../components/Modal';
+import LotForm from '../components/forms/LotForm';
+import type { Mission } from '../data/types';
 
 const getTypeLabel = (type: string) => {
   const map: Record<string, string> = { immeuble: 'Immeuble', maison: 'Maison', local_commercial: 'Local Commercial', mixte: 'Mixte', appartement: 'Appartement', box_parking: 'Box Parking', bureau: 'Bureau', autre: 'Autre' };
   return map[type] || type;
 };
 
+const MISSION_STATUS_CONFIG: Record<string, { label: string; color: string }> = {
+  planifiee: { label: 'Planifiee', color: 'bg-blue-50 text-blue-700 border-blue-200' },
+  a_assigner: { label: 'A assigner', color: 'bg-amber-50 text-amber-700 border-amber-200' },
+  en_cours: { label: 'En cours', color: 'bg-amber-50 text-amber-700 border-amber-200' },
+  terminee: { label: 'Terminee', color: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
+  annulee: { label: 'Annulee', color: 'bg-rose-50 text-rose-700 border-rose-200' },
+};
+
 export default function BatimentDetail() {
   const { id } = useParams<{ id: string }>();
-  const { getBatimentById, getLotsByBatiment } = useData();
-  const [activeTab, setActiveTab] = useState<'lots' | 'informations'>('lots');
+  const navigate = useNavigate();
+  const { getBatimentById, getLotsByBatiment, missions, getLotById, getUserById } = useData();
+  const [activeTab, setActiveTab] = useState<'lots' | 'informations' | 'missions'>('lots');
+  const [showLotModal, setShowLotModal] = useState(false);
 
   const batiment = useMemo(() => (id ? getBatimentById(id) : undefined), [id, getBatimentById]);
   const lots = useMemo(() => (id ? getLotsByBatiment(id) : []), [id, getLotsByBatiment]);
+
+  const batimentMissions = useMemo(() => {
+    const lotIds = new Set(lots.map(l => l.id));
+    return missions.filter(m => lotIds.has(m.lot_id)).map(m => {
+      const lot = getLotById(m.lot_id);
+      const techs = m.techniciens.map(tid => getUserById(tid)).filter(Boolean);
+      return { ...m, lot, techNames: techs.map(t => t!) };
+    });
+  }, [lots, missions, getLotById, getUserById]);
 
   if (!batiment) {
     return (
@@ -30,6 +53,48 @@ export default function BatimentDetail() {
       </div>
     );
   }
+
+  const missionColumns: Column<typeof batimentMissions[0]>[] = [
+    {
+      key: 'reference',
+      label: 'Reference',
+      render: (m) => <span className="font-mono text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded border border-blue-100">{m.reference}</span>,
+    },
+    {
+      key: 'lot',
+      label: 'Lot',
+      render: (m) => (
+        <Link to={m.lot ? `/lots/${m.lot.id}` : '#'} onClick={e => e.stopPropagation()} className="text-sm font-semibold text-blue-600 hover:underline">
+          {m.lot ? `Lot ${m.lot.numero || ''}` : 'Lot'}
+        </Link>
+      ),
+    },
+    {
+      key: 'date',
+      label: 'Date',
+      render: (m) => <span className="text-sm text-slate-700">{m.date_planifiee}</span>,
+    },
+    {
+      key: 'statut',
+      label: 'Statut',
+      render: (m) => {
+        const cfg = MISSION_STATUS_CONFIG[m.statut];
+        return (
+          <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full border ${cfg?.color || ''}`}>{cfg?.label || m.statut}</span>
+        );
+      },
+    },
+    {
+      key: 'technicien',
+      label: 'Technicien',
+      render: (m) => m.techNames.length > 0 ? (
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center text-[9px] font-bold text-slate-600">{m.techNames[0].prenom[0]}{m.techNames[0].nom[0]}</div>
+          <span className="text-sm text-slate-600">{m.techNames[0].prenom} {m.techNames[0].nom}</span>
+        </div>
+      ) : <span className="text-xs text-amber-500 italic">Non assigne</span>,
+    },
+  ];
 
   return (
     <div>
@@ -68,7 +133,7 @@ export default function BatimentDetail() {
           <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-all">
             <Pencil className="w-4 h-4" /> Modifier
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-all">
+          <button onClick={() => setShowLotModal(true)} className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-all">
             <Plus className="w-4 h-4" /> Nouveau lot
           </button>
         </div>
@@ -76,10 +141,11 @@ export default function BatimentDetail() {
 
       <div className="border-b border-slate-200 mb-8">
         <div className="flex gap-8">
-          {(['lots', 'informations'] as const).map((tab) => (
+          {(['lots', 'missions', 'informations'] as const).map((tab) => (
             <button key={tab} onClick={() => setActiveTab(tab)} className={`pb-4 text-sm font-semibold transition-all relative ${activeTab === tab ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}>
-              {tab === 'lots' ? 'Lots' : 'Informations'}
+              {tab === 'lots' ? 'Lots' : tab === 'missions' ? 'Missions' : 'Informations'}
               {tab === 'lots' && <span className={`ml-2 px-2 py-0.5 rounded-full text-[10px] ${activeTab === 'lots' ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-500'}`}>{lots.length}</span>}
+              {tab === 'missions' && <span className={`ml-2 px-2 py-0.5 rounded-full text-[10px] ${activeTab === 'missions' ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-500'}`}>{batimentMissions.length}</span>}
               {activeTab === tab && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full" />}
             </button>
           ))}
@@ -100,7 +166,7 @@ export default function BatimentDetail() {
             </thead>
             <tbody className="divide-y divide-slate-100">
               {lots.map((lot) => (
-                <tr key={lot.id} className="group hover:bg-slate-50/80 transition-colors">
+                <tr key={lot.id} className="group hover:bg-slate-50/80 transition-colors cursor-pointer" onClick={() => navigate(`/lots/${lot.id}`)}>
                   <td className="px-6 py-4">
                     <div className="flex flex-col">
                       <span className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
@@ -130,7 +196,7 @@ export default function BatimentDetail() {
                     </div>
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <Link to={`/lots/${lot.id}`} className="inline-flex items-center gap-1 text-sm font-bold text-blue-600 hover:text-blue-800 transition-colors">
+                    <Link to={`/lots/${lot.id}`} onClick={e => e.stopPropagation()} className="inline-flex items-center gap-1 text-sm font-bold text-blue-600 hover:text-blue-800 transition-colors">
                       Details <ChevronRight className="w-4 h-4" />
                     </Link>
                   </td>
@@ -147,6 +213,14 @@ export default function BatimentDetail() {
             </tbody>
           </table>
         </div>
+      ) : activeTab === 'missions' ? (
+        <DataTable
+          columns={missionColumns}
+          data={batimentMissions}
+          onRowClick={(m) => navigate(`/missions/${m.id}`)}
+          emptyIcon={<CalendarCheck className="w-12 h-12 text-slate-200" />}
+          emptyMessage="Aucune mission pour ce batiment"
+        />
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
@@ -216,6 +290,11 @@ export default function BatimentDetail() {
           </div>
         </div>
       )}
+
+      {/* Nouveau lot modal */}
+      <Modal isOpen={showLotModal} onClose={() => setShowLotModal(false)} title="Nouveau lot" size="lg">
+        <LotForm onClose={() => setShowLotModal(false)} preselectedBatimentId={batiment.id} />
+      </Modal>
     </div>
   );
 }

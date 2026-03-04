@@ -1,16 +1,19 @@
 import { useState } from 'react';
+import { Plus } from 'lucide-react';
 import type { LotType, HeatingType, HeatingMode } from '../../data/types';
 import { useData } from '../../contexts/DataContext';
 
 interface LotFormProps {
   onClose: () => void;
+  preselectedBatimentId?: string;
+  onOpenBatimentModal?: () => void;
 }
 
-export default function LotForm({ onClose }: LotFormProps) {
+export default function LotForm({ onClose, preselectedBatimentId, onOpenBatimentModal }: LotFormProps) {
   const { addLot, batiments } = useData();
   const activeBatiments = batiments.filter(b => !b.archived);
 
-  const [batimentId, setBatimentId] = useState(activeBatiments[0]?.id || '');
+  const [batimentId, setBatimentId] = useState(preselectedBatimentId || activeBatiments[0]?.id || '');
   const [typeBien, setTypeBien] = useState<LotType>('appartement');
   const [etage, setEtage] = useState('');
   const [numero, setNumero] = useState('');
@@ -44,7 +47,14 @@ export default function LotForm({ onClose }: LotFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div>
-        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Batiment *</label>
+        <div className="flex items-center justify-between mb-1.5">
+          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Batiment *</label>
+          {onOpenBatimentModal && (
+            <button type="button" onClick={onOpenBatimentModal} className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+              <Plus size={12} /> Creer un batiment
+            </button>
+          )}
+        </div>
         <select required value={batimentId} onChange={e => setBatimentId(e.target.value)} className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600 bg-white">
           {activeBatiments.map(b => <option key={b.id} value={b.id}>{b.designation}{b.numero_batiment ? ` (Bat. ${b.numero_batiment})` : ''}</option>)}
         </select>

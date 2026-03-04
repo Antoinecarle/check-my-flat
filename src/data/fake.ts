@@ -176,6 +176,8 @@ export const missions: Mission[] = [
   { id: 'm-8', workspace_id: 'ws-1', lot_id: 'lot-9', reference: 'M-2026-0008', date_planifiee: '2026-03-03', creneau: 'custom', heure_debut: '14:00', heure_fin: '17:00', statut: 'planifiee', techniciens: ['u-5'], edl_ids: ['edl-8'], created_by: 'u-1', created_at: '2026-02-24T08:00:00Z', commentaire: 'Local commercial, accès par parking' },
   { id: 'm-9', workspace_id: 'ws-1', lot_id: 'lot-4', reference: 'M-2025-0042', date_planifiee: '2026-02-20', creneau: 'matin', statut: 'terminee', techniciens: ['u-4'], edl_ids: ['edl-9'], created_by: 'u-2', created_at: '2026-02-15T09:00:00Z' },
   { id: 'm-10', workspace_id: 'ws-1', lot_id: 'lot-2', reference: 'M-2025-0041', date_planifiee: '2026-02-18', creneau: 'apres_midi', statut: 'terminee', techniciens: ['u-3'], edl_ids: ['edl-10'], created_by: 'u-2', created_at: '2026-02-14T10:00:00Z' },
+  { id: 'm-11', workspace_id: 'ws-1', lot_id: 'lot-10', reference: 'M-2026-0009', date_planifiee: '2026-03-05', creneau: 'matin', statut: 'a_assigner', techniciens: [], edl_ids: ['edl-11'], created_by: 'u-1', created_at: '2026-02-25T09:00:00Z', commentaire: 'Inventaire annuel bureau B2' },
+  { id: 'm-12', workspace_id: 'ws-1', lot_id: 'lot-3', reference: 'M-2026-0010', date_planifiee: '2026-03-06', creneau: 'apres_midi', statut: 'a_assigner', techniciens: [], edl_ids: ['edl-12', 'edl-13'], created_by: 'u-2', created_at: '2026-02-25T10:00:00Z' },
 ];
 
 // ============================================================
@@ -192,6 +194,9 @@ export const edls: Edl[] = [
   { id: 'edl-8', workspace_id: 'ws-1', lot_id: 'lot-9', mission_id: 'm-8', type: 'entree', statut: 'brouillon', technicien_id: 'u-5', locataires: [], created_at: '2026-02-24T08:00:00Z' },
   { id: 'edl-9', workspace_id: 'ws-1', lot_id: 'lot-4', mission_id: 'm-9', type: 'sortie', statut: 'signe', technicien_id: 'u-4', locataires: ['t-9'], date_realisation: '2026-02-20', created_at: '2026-02-15T09:00:00Z' },
   { id: 'edl-10', workspace_id: 'ws-1', lot_id: 'lot-2', mission_id: 'm-10', type: 'entree', statut: 'signe', technicien_id: 'u-3', locataires: ['t-10'], date_realisation: '2026-02-18', created_at: '2026-02-14T10:00:00Z' },
+  { id: 'edl-11', workspace_id: 'ws-1', lot_id: 'lot-10', mission_id: 'm-11', type: 'inventaire', statut: 'brouillon', locataires: [], created_at: '2026-02-25T09:00:00Z' },
+  { id: 'edl-12', workspace_id: 'ws-1', lot_id: 'lot-3', mission_id: 'm-12', type: 'inventaire', statut: 'brouillon', locataires: ['t-11'], created_at: '2026-02-25T10:00:00Z' },
+  { id: 'edl-13', workspace_id: 'ws-1', lot_id: 'lot-3', mission_id: 'm-12', type: 'sortie', statut: 'brouillon', technicien_id: 'u-3', locataires: ['t-11'], created_at: '2026-02-25T10:00:00Z' },
 ];
 
 // ============================================================

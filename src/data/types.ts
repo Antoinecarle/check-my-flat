@@ -13,10 +13,10 @@ export type HeatingMode = 'gaz' | 'electrique' | 'fioul' | 'pompe_chaleur' | 'au
 export type TiersPersonType = 'physique' | 'morale';
 export type TiersRole = 'proprietaire' | 'mandataire' | 'locataire';
 
-export type MissionStatus = 'planifiee' | 'en_cours' | 'terminee' | 'annulee';
+export type MissionStatus = 'planifiee' | 'a_assigner' | 'en_cours' | 'terminee' | 'annulee';
 export type MissionSlot = 'matin' | 'apres_midi' | 'journee' | 'custom';
 
-export type EdlType = 'entree' | 'sortie';
+export type EdlType = 'entree' | 'sortie' | 'inventaire';
 export type EdlStatus = 'brouillon' | 'en_cours' | 'signe' | 'archive';
 
 // ============================================================

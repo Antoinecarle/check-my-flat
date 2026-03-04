@@ -1,10 +1,11 @@
 import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Plus, Search, Building2, Home, Store, Layers, ChevronRight, FilterX, Archive } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import { useRole } from '../contexts/RoleContext';
 import type { BuildingType } from '../data/types';
 import AdvancedFilter, { applyFilters, type FilterRule, type ColumnDef } from '../components/AdvancedFilter';
+import DataTable, { type Column } from '../components/DataTable';
 import Modal from '../components/Modal';
 import BatimentForm from '../components/forms/BatimentForm';
 
@@ -39,6 +40,7 @@ const FILTER_COLUMNS: ColumnDef[] = [
 export default function Batiments() {
   const { batiments } = useData();
   const { role } = useRole();
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [activeType, setActiveType] = useState<BuildingType | 'Tous'>('Tous');
   const [includeArchived, setIncludeArchived] = useState(false);
@@ -58,6 +60,68 @@ export default function Batiments() {
     result = applyFilters(result, filterRules, FILTER_COLUMNS);
     return result;
   }, [batiments, searchTerm, activeType, includeArchived, filterRules]);
+
+  const columns: Column<typeof filteredBatiments[0]>[] = [
+    {
+      key: 'designation',
+      label: 'Designation',
+      minWidth: 200,
+      render: (b) => (
+        <div className="flex items-center gap-4">
+          <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors border border-slate-200/50">
+            {getTypeIcon(b.type)}
+          </div>
+          <div className="flex flex-col">
+            <span className="text-sm font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
+              {b.designation}
+            </span>
+            {b.numero_batiment && <span className="text-xs text-slate-500 font-mono">Bat. {b.numero_batiment}</span>}
+          </div>
+          {b.archived && (
+            <span className="ml-2 text-[10px] uppercase font-bold tracking-widest text-slate-400 flex items-center gap-1">
+              <Archive size={10} /> Archive
+            </span>
+          )}
+        </div>
+      ),
+    },
+    {
+      key: 'type',
+      label: 'Type',
+      minWidth: 120,
+      render: (b) => (
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border bg-slate-100 text-slate-700 border-slate-200">
+          {getTypeIcon(b.type)}{getTypeLabel(b.type)}
+        </span>
+      ),
+    },
+    {
+      key: 'adresse',
+      label: 'Adresse',
+      minWidth: 180,
+      render: (b) => (
+        <div className="text-sm text-slate-600 max-w-[240px] truncate">
+          {b.adresses[0]?.rue}, {b.adresses[0]?.code_postal} {b.adresses[0]?.ville}
+        </div>
+      ),
+    },
+    {
+      key: 'lots',
+      label: 'Lots',
+      minWidth: 60,
+      render: (b) => (
+        <span className="text-sm font-mono font-medium text-slate-900 bg-slate-100 px-2 py-1 rounded">
+          {String(b.lots_count).padStart(2, '0')}
+        </span>
+      ),
+    },
+    {
+      key: 'annee',
+      label: 'Annee',
+      minWidth: 60,
+      render: (b) => <span className="text-sm text-slate-500 font-mono">{b.annee_construction || '—'}</span>,
+    },
+  ];
 
   return (
     <div>
@@ -117,82 +181,13 @@ export default function Batiments() {
         </label>
       </div>
 
-      {/* Table */}
-      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
-        <table className="w-full border-collapse text-left">
-          <thead>
-            <tr className="border-b border-slate-100 bg-slate-50/50">
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider w-1/3">Designation</th>
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Type</th>
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Adresse</th>
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Lots</th>
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Annee</th>
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-right"></th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {filteredBatiments.length > 0 ? (
-              filteredBatiments.map((b) => (
-                <tr key={b.id} className="group hover:bg-slate-50/80 transition-colors relative">
-                  <td className="px-6 py-5">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors border border-slate-200/50">
-                        {getTypeIcon(b.type)}
-                      </div>
-                      <div className="flex flex-col">
-                        <Link to={`/batiments/${b.id}`} className="text-sm font-semibold text-slate-900 hover:text-blue-600 transition-colors">
-                          {b.designation}
-                        </Link>
-                        {b.numero_batiment && <span className="text-xs text-slate-500 font-mono">Bat. {b.numero_batiment}</span>}
-                      </div>
-                      {b.archived && (
-                        <span className="ml-2 text-[10px] uppercase font-bold tracking-widest text-slate-400 flex items-center gap-1">
-                          <Archive size={10} /> Archive
-                        </span>
-                      )}
-                    </div>
-                  </td>
-                  <td className="px-6 py-5">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border bg-slate-100 text-slate-700 border-slate-200">
-                      {getTypeIcon(b.type)}{getTypeLabel(b.type)}
-                    </span>
-                  </td>
-                  <td className="px-6 py-5">
-                    <div className="text-sm text-slate-600 max-w-[240px] truncate">
-                      {b.adresses[0]?.rue}, {b.adresses[0]?.code_postal} {b.adresses[0]?.ville}
-                    </div>
-                  </td>
-                  <td className="px-6 py-5">
-                    <span className="text-sm font-mono font-medium text-slate-900 bg-slate-100 px-2 py-1 rounded">
-                      {String(b.lots_count).padStart(2, '0')}
-                    </span>
-                  </td>
-                  <td className="px-6 py-5">
-                    <span className="text-sm text-slate-500 font-mono">{b.annee_construction || '—'}</span>
-                  </td>
-                  <td className="px-6 py-5 text-right">
-                    <Link to={`/batiments/${b.id}`} className="opacity-0 group-hover:opacity-100 transition-opacity p-2 text-blue-600 rounded-lg bg-blue-50 inline-flex">
-                      <ChevronRight size={18} />
-                    </Link>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={6} className="px-6 py-20 text-center">
-                  <div className="flex flex-col items-center gap-3 text-slate-400">
-                    <FilterX size={48} strokeWidth={1} />
-                    <p className="text-sm">Aucun batiment ne correspond a votre recherche.</p>
-                    <button onClick={() => { setSearchTerm(''); setActiveType('Tous'); setIncludeArchived(true); setFilterRules([]); }} className="text-blue-600 text-sm font-medium hover:underline">
-                      Reinitialiser les filtres
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+      <DataTable
+        columns={columns}
+        data={filteredBatiments}
+        onRowClick={(b) => navigate(`/batiments/${b.id}`)}
+        emptyIcon={<FilterX size={48} strokeWidth={1} className="text-slate-300" />}
+        emptyMessage="Aucun batiment ne correspond a votre recherche."
+      />
 
       <div className="mt-6 flex items-center justify-between text-xs text-slate-400 font-medium uppercase tracking-widest">
         <p>Total: {batiments.filter(b => !b.archived).length} actifs — Affiches: {filteredBatiments.length}</p>

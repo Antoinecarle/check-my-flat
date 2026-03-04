@@ -21,8 +21,12 @@ interface DataContextValue {
   addLot: (l: Omit<Lot, 'id' | 'created_at' | 'archived'>) => void;
   addMission: (m: Omit<Mission, 'id' | 'workspace_id' | 'created_at'>) => void;
   updateMission: (id: string, updates: Partial<Mission>) => void;
+  addEdl: (e: Omit<Edl, 'id' | 'workspace_id' | 'created_at'>) => string;
+  updateEdl: (id: string, updates: Partial<Edl>) => void;
+  addTiers: (t: Omit<Tiers, 'id' | 'workspace_id' | 'created_at' | 'archived'>) => string;
   getBatimentById: (id: string) => Batiment | undefined;
   getLotById: (id: string) => Lot | undefined;
+  getEdlById: (id: string) => Edl | undefined;
   getTiersById: (id: string) => Tiers | undefined;
   getUserById: (id: string) => typeof users[0] | undefined;
   getMissionById: (id: string) => Mission | undefined;
@@ -40,7 +44,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const [lots, setLots] = useState<Lot[]>([...initialLots]);
   const [missions, setMissions] = useState<Mission[]>([...initialMissions]);
   const [edls, setEdls] = useState<Edl[]>([...initialEdls]);
-  const [tiersList] = useState<Tiers[]>([...initialTiers]);
+  const [tiersList, setTiersList] = useState<Tiers[]>([...initialTiers]);
 
   const addBatiment = useCallback((b: Omit<Batiment, 'id' | 'workspace_id' | 'created_at' | 'archived' | 'lots_count'>) => {
     const id = `bat-${Date.now()}`;
@@ -81,10 +85,38 @@ export function DataProvider({ children }: { children: ReactNode }) {
     setMissions(prev => prev.map(m => m.id === id ? { ...m, ...updates } : m));
   }, []);
 
+  const addEdl = useCallback((e: Omit<Edl, 'id' | 'workspace_id' | 'created_at'>): string => {
+    const id = `edl-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+    setEdls(prev => [...prev, {
+      ...e,
+      id,
+      workspace_id: 'ws-1',
+      created_at: new Date().toISOString(),
+    }]);
+    return id;
+  }, []);
+
+  const updateEdl = useCallback((id: string, updates: Partial<Edl>) => {
+    setEdls(prev => prev.map(e => e.id === id ? { ...e, ...updates } : e));
+  }, []);
+
+  const addTiers = useCallback((t: Omit<Tiers, 'id' | 'workspace_id' | 'created_at' | 'archived'>): string => {
+    const id = `t-${Date.now()}`;
+    setTiersList(prev => [...prev, {
+      ...t,
+      id,
+      workspace_id: 'ws-1',
+      created_at: new Date().toISOString(),
+      archived: false,
+    }]);
+    return id;
+  }, []);
+
   const getBatimentById = useCallback((id: string) => batiments.find(b => b.id === id), [batiments]);
   const getLotById = useCallback((id: string) => lots.find(l => l.id === id), [lots]);
   const getTiersById = useCallback((id: string) => tiersList.find(t => t.id === id), [tiersList]);
   const getUserById = useCallback((id: string) => users.find(u => u.id === id), []);
+  const getEdlById = useCallback((id: string) => edls.find(e => e.id === id), [edls]);
   const getMissionById = useCallback((id: string) => missions.find(m => m.id === id), [missions]);
   const getLotsByBatiment = useCallback((batimentId: string) => lots.filter(l => l.batiment_id === batimentId), [lots]);
   const getMissionsByLot = useCallback((lotId: string) => missions.filter(m => m.lot_id === lotId), [missions]);
@@ -95,8 +127,8 @@ export function DataProvider({ children }: { children: ReactNode }) {
   return (
     <DataContext.Provider value={{
       batiments, lots, missions, edls, tiers: tiersList,
-      addBatiment, addLot, addMission, updateMission,
-      getBatimentById, getLotById, getTiersById, getUserById, getMissionById,
+      addBatiment, addLot, addMission, updateMission, addEdl, updateEdl, addTiers,
+      getBatimentById, getLotById, getEdlById, getTiersById, getUserById, getMissionById,
       getLotsByBatiment, getMissionsByLot, getEdlsByLot, getEdlsByMission, getTiersByRole,
     }}>
       {children}

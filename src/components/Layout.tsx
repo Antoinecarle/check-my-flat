@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -6,14 +6,13 @@ import {
   DoorOpen,
   Users,
   CalendarCheck,
-  ClipboardList,
+  FileText,
   Settings,
   ChevronLeft,
   ChevronRight,
   Bell,
   Home,
   CheckCircle2,
-  ChevronRight as BreadcrumbSeparator,
   Shield,
   Wrench,
 } from 'lucide-react';
@@ -29,7 +28,7 @@ const navigationItems = [
   { name: 'Lots', path: '/lots', icon: DoorOpen },
   { name: 'Tiers', path: '/tiers', icon: Users },
   { name: 'Missions', path: '/missions', icon: CalendarCheck },
-  { name: 'Etats des lieux', path: '/edl', icon: ClipboardList },
+  { name: 'Documents', path: '/documents', icon: FileText },
 ];
 
 const secondaryItems = [
@@ -40,12 +39,6 @@ export default function Layout() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const location = useLocation();
   const { role, setRole, currentUser } = useRole();
-
-  const currentPathLabel = useMemo(() => {
-    const allItems = [...navigationItems, ...secondaryItems];
-    const match = allItems.find(item => item.path === location.pathname);
-    return match ? match.name : 'Tableau de bord';
-  }, [location.pathname]);
 
   const initials = `${currentUser.prenom[0]}${currentUser.nom[0]}`;
   const roleLabel = role === 'admin' ? 'Administrateur' : 'Technicien';
@@ -187,17 +180,8 @@ export default function Layout() {
         className="transition-all duration-300 ease-in-out"
         style={{ marginLeft: isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH }}
       >
-        {/* Breadcrumb bar */}
-        <div className="px-8 pt-4 pb-2">
-          <div className="flex items-center gap-2 text-xs font-medium">
-            <span className="text-slate-400">ImmoChecker</span>
-            <BreadcrumbSeparator size={12} className="text-slate-300" />
-            <span className="text-slate-900">{currentPathLabel}</span>
-          </div>
-        </div>
-
         {/* Content */}
-        <main className="px-8 pb-8 relative z-10 max-w-7xl mx-auto">
+        <main className="px-8 pt-6 pb-8 relative z-10 max-w-7xl mx-auto">
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}
